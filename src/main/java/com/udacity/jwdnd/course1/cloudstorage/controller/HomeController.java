@@ -8,8 +8,10 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import com.udacity.jwdnd.course1.cloudstorage.model.Credentials;
 import com.udacity.jwdnd.course1.cloudstorage.model.Files;
 import com.udacity.jwdnd.course1.cloudstorage.model.Notes;
+import com.udacity.jwdnd.course1.cloudstorage.services.CredentialService;
 import com.udacity.jwdnd.course1.cloudstorage.services.FileService;
 import com.udacity.jwdnd.course1.cloudstorage.services.NoteService;
 import com.udacity.jwdnd.course1.cloudstorage.services.UserService;
@@ -26,6 +28,9 @@ public class HomeController {
 
 	@Autowired
 	UserService userService;
+	
+	@Autowired
+	CredentialService credentialService;
 
 	@GetMapping
 	public String getHome(Model model) {
@@ -35,6 +40,9 @@ public class HomeController {
 			
 			List<Notes> notes = noteService.getAllNotes();
 			model.addAttribute("notes", notes);
+			
+			List<Credentials> credentials = credentialService.getAllCredentials();
+			model.addAttribute("credentials", credentials);
 
 			return "home";
 		} catch (Exception e) {

@@ -7,43 +7,37 @@ import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.multipart.MultipartFile;
 
+import com.udacity.jwdnd.course1.cloudstorage.model.Notes;
 import com.udacity.jwdnd.course1.cloudstorage.model.Users;
-import com.udacity.jwdnd.course1.cloudstorage.services.FileService;
+import com.udacity.jwdnd.course1.cloudstorage.services.NoteService;
 import com.udacity.jwdnd.course1.cloudstorage.services.UserService;
 
 @Controller
-public class FileController {
+public class NoteController {
 
 	@Autowired
-	FileService fileService;
+	NoteService noteService;
 
 	@Autowired
 	UserService userService;
 
-	@PostMapping("/files")
-	public String handleFileUpload(@RequestParam("fileUpload") MultipartFile fileUpload, Model model,
-			Authentication auth) throws IOException {
+	@PostMapping("/notes")
+	public String handleAddNote(Notes newNote, Model model, Authentication auth) throws IOException {
 
 		String uploadError = null;
-		
-		if (fileUpload.getOriginalFilename().isBlank()) {
-			return "home";
-		}
 
-		if (!fileService.isFileAvailable(fileUpload.getOriginalFilename())) {
-			uploadError = "The file name already exists.";
+		if (!noteService.isNoteAvailable(newNote.getNoteTitle())) {
+			uploadError = "The note title already exists.";
 			model.addAttribute("uploadError", uploadError);
 		}
 
 		if (uploadError == null) {
 			String username = auth.getName();
 			Users user = userService.getUser(username);
-			int rowsAdded = fileService.createFile(fileUpload, user.getUserId());
+			int rowsAdded = noteService.createNote(newNote, user.getUserId());
 			if (rowsAdded < 0) {
-				uploadError = "There was an error uploading your file. Please try again.";
+				uploadError = "There was an error adding your note. Please try again.";
 				model.addAttribute("uploadError", uploadError);
 			} else {
 				model.addAttribute("uploadSuccess", true);
@@ -52,4 +46,5 @@ public class FileController {
 		return "/result";
 
 	}
+
 }

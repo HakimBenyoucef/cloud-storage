@@ -21,12 +21,20 @@ public class NoteService {
 		return noteMapper.addNote(newNote);
 	}
 
-	public boolean isNoteAvailable(String noteTitle) {
-		return noteMapper.getNote(noteTitle) == null;
-	}
-
 	public List<Notes> getAllNotes() {
 		return noteMapper.getAllNotes();
+	}
+
+	public Notes getNoteById(Integer noteId) {
+		return noteMapper.getNoteById(noteId);
+	}
+
+	public int delete(Integer noteId) {
+		return noteMapper.delete(noteId);
+	}
+
+	public int update(Notes note) {
+		return noteMapper.update(note);
 	}
 
 }

@@ -95,7 +95,7 @@ public class FileController {
 
 		String uploadError = null;
 		if (result < 0) {
-			uploadError = "There was an error uploading your file. Please try again.";
+			uploadError = "There was an error deleting your file. Please try again.";
 			model.addAttribute("uploadError", uploadError);
 		} else {
 			model.addAttribute("uploadSuccess", true);

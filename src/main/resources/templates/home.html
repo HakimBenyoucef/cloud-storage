@@ -61,8 +61,7 @@
 							</thead>
 							<tbody>
 								<tr th:each="file: ${files}">
-									<td><a
-										th:href="@{/download-file/{id}(id=${file.fileId})}"
+									<td><a th:href="@{/download-file/{id}(id=${file.fileId})}"
 										class="btn btn-success">Download</a> <a
 										th:href="@{/delete-file/{id}(id=${file.fileId})}"
 										class="btn btn-danger">Delete</a></td>
@@ -90,7 +89,9 @@
 							<tbody>
 								<tr th:each="note: ${notes}">
 									<td>
-										<button type="button" class="btn btn-success">Edit</button> <a
+										<button type="button" class="btn btn-success"
+											th:attr="onclick=|showNoteModal('${note.noteId}', '${note.noteTitle}', '${note.noteDescription}')|">Edit</button>
+										<a th:href="@{/delete-note/{id}(id=${note.noteId})}"
 										class="btn btn-danger">Delete</a>
 									</td>
 									<td th:text="${note.noteTitle}">ExampleNote.txt</td>
@@ -158,7 +159,10 @@
 							<tbody>
 								<tr th:each="credential: ${credentials}">
 									<td>
-										<button type="button" class="btn btn-success">Edit</button> <a
+										<button type="button" class="btn btn-success"
+											th:attr="onclick=|showCredentialModal('${credential.credentialId}', '${credential.url}', '${credential.username}', '${credential.password}')|">Edit</button>
+										<a
+										th:href="@{/delete-credential/{id}(id=${credential.credentialId})}"
 										class="btn btn-danger">Delete</a>
 									</td>
 									<th scope="row" th:text="${credential.url}">Example

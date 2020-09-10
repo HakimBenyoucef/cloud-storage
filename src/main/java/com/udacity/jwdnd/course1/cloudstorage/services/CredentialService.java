@@ -28,12 +28,21 @@ public class CredentialService {
 		return credentialMapper.addCredential(newCredential);
 	}
 
-	public boolean isCredentialAvailable(String url) {
-		return credentialMapper.getCredential(url) == null;
-	}
-
 	public List<Credentials> getAllCredentials() {
 		return credentialMapper.getAllCredentials();
+	}
+
+	public Credentials getCredentialById(Integer noteId) {
+		return credentialMapper.getCredentialById(noteId);
+	}
+	
+	public int delete(Integer credentialId) {
+		return credentialMapper.delete(credentialId);
+	}
+	
+	public int update(Credentials credential) {
+		this.encryptPassword(credential);
+		return credentialMapper.update(credential);
 	}
 
 	private void encryptPassword(Credentials credential) {

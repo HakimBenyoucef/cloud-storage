@@ -28,8 +28,8 @@ public class CredentialService {
 		return credentialMapper.addCredential(newCredential);
 	}
 
-	public List<Credentials> getAllCredentials() {
-		return credentialMapper.getAllCredentials();
+	public List<Credentials> getAllCredentials(int userId) {
+		return credentialMapper.getAllCredentials(userId);
 	}
 
 	public Credentials getCredentialById(Integer noteId) {

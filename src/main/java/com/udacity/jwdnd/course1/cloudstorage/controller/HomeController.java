@@ -3,6 +3,7 @@ package com.udacity.jwdnd.course1.cloudstorage.controller;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -33,15 +34,19 @@ public class HomeController {
 	CredentialService credentialService;
 
 	@GetMapping
-	public String getHome(Model model) {
+	public String getHome(Model model, Authentication auth) {
 		try {
-			List<Files> files = fileService.getAllFiles();
+
+			String username = auth.getName();
+			int userId = userService.getUser(username).getUserId();
+			
+			List<Files> files = fileService.getAllFiles(userId);
 			model.addAttribute("files", files);
 			
-			List<Notes> notes = noteService.getAllNotes();
+			List<Notes> notes = noteService.getAllNotes(userId);
 			model.addAttribute("notes", notes);
 			
-			List<Credentials> credentials = credentialService.getAllCredentials();
+			List<Credentials> credentials = credentialService.getAllCredentials(userId);
 			model.addAttribute("credentials", credentials);
 			
 			model.addAttribute("credentialService",credentialService);

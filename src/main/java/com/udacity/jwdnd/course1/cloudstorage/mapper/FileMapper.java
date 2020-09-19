@@ -18,8 +18,8 @@ public interface FileMapper {
 	@Select("SELECT * FROM FILES WHERE fileId = #{id}")
 	Files getFileById(Integer id);
 
-	@Select("SELECT * FROM FILES")
-	List<Files> getAllFiles();
+	@Select("SELECT * FROM FILES WHERE userId = #{userId}")
+	List<Files> getAllFiles(Integer userId);
 
 	@Insert("INSERT INTO FILES (fileName, contentType, fileSize, userId, filedata) "
 			+ "VALUES(#{fileName}, #{contentType}, #{fileSize}, #{userId}, #{filedata})")

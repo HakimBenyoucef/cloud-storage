@@ -56,6 +56,7 @@ public class CredentialService {
 
 	public String decryptPassword(Credentials credential) {
 
+		System.out.println("2 => "+credential);
 		return encryptionService.decryptValue(credential.getPassword(), credential.getKey());
 	}
 }

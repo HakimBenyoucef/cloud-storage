@@ -43,6 +43,8 @@ public class HomeController {
 			
 			List<Credentials> credentials = credentialService.getAllCredentials();
 			model.addAttribute("credentials", credentials);
+			
+			model.addAttribute("credentialService",credentialService);
 
 			return "home";
 		} catch (Exception e) {
